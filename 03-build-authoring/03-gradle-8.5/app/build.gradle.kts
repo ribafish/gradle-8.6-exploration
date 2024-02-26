@@ -47,3 +47,15 @@ tasks.named<Test>("test") {
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()
 }
+
+tasks.register("unrelated") {
+    println("Unrelated task created")
+}
+
+// This will create also the `unrelated` task as it can be seen in the console log
+tasks.matching { it.name.contains("test") }.configureEach {
+    // configure details of all '*pack*' tasks that are part of the task graph
+    doLast {
+        println("Added configuration")
+    }
+}
