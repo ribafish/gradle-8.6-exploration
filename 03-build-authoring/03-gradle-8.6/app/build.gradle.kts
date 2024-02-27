@@ -28,8 +28,16 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
     // This dependency is used by the application.
-    implementation(libs.guava)
+    implementation(libs.guava) {
+        capabilities {
+            // Values in the interpolated String below are lazily evaluated, allowing them to be set after this block
+            requireCapability(project.provider { project.ext.get("guavaCapability") })
+        }
+    }
 }
+
+// Implicitly provided by guava lib
+val guavaCapability by ext("com.google.collections:google-collections:32.1.2-jre")
 
 // Apply a specific Java toolchain to ease working on different environments.
 java {

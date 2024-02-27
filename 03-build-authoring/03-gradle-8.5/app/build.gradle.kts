@@ -28,7 +28,14 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
     // This dependency is used by the application.
-    implementation(libs.guava)
+    implementation(libs.guava) {
+        capabilities {
+            // Implicitly provided by guava lib
+            requireCapability("com.google.collections:google-collections:32.1.2-jre")
+            // Not supported in Gradle 8.5:
+//            requireCapability(project.provider { project.ext.get("guavaCapability") })
+        }
+    }
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
