@@ -52,3 +52,12 @@ dependencyLocking {
     lockAllConfigurations()
 }
 
+tasks.register("circular") {
+    val property = objects.property(String::class.java)
+    property.set("some value")
+
+    // wrong, self-references only supported via #update()
+    property.set(property.map { "$it and more" })
+
+    println(property.get()) // error when evaluating
+}
