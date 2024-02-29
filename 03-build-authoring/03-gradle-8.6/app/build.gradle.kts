@@ -56,13 +56,18 @@ tasks.named<Test>("test") {
     useJUnitPlatform()
 }
 
-tasks.register("unrelated") {
+tasks.register("unrelatedTest") {
     println("Unrelated task created")
+    val out = layout.buildDirectory.file("unrelated.txt")
+    outputs.file(out)
+    doLast {
+        out.get().asFile.writeText("unrelated")
+    }
 }
 
 // This will not create the `unrelated` task as it's name doesn't match, so "Unrelated task created" won't be visible in the console log
-tasks.named { it.contains("test") }.configureEach {
-    // configure details of all '*pack*' tasks that are part of the task graph
+tasks.named { it.contains("test", ignoreCase = true) }.configureEach {
+    // configure details of all '*test*' tasks that are part of the task graph
     doLast {
         println("Added configuration")
     }

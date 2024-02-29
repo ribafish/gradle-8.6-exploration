@@ -21,3 +21,10 @@ gradleEnterprise {
         publishAlways()
     }
 }
+
+buildCache {
+    local {
+        isEnabled = false
+    }
+}
+
