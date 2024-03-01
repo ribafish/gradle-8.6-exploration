@@ -64,7 +64,6 @@ tasks.register("unrelatedTest") {
     }
 }
 
-// This will create also the `unrelated` task as it can be seen in the console log
 tasks.matching { it.name.contains("test", ignoreCase = true) }.configureEach {
     // configure details of all '*test*' tasks that are part of the task graph
     doLast {
